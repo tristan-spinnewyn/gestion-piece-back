@@ -1,0 +1,19 @@
+{
+  "name": "exemple",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "cron": "^1.8.2",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.9.1",
+    "nodemailer": "^6.4.6",
+    "pg": "^7.18.2"
+  },
+  "scripts": {
+    "run": "node main.js",
+    "debug": "node --inspect --inspect-brk main.js"
+  }
+}
