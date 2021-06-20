@@ -1,1 +1,1 @@
-module.exports = connectionString = 'postgresql://dbuser:secretpassword@database.server.com:3211/mydb'
+module.exports.connectionString = 'postgresql://dbuser:secretpassword@database.server.com:3211/mydb'
