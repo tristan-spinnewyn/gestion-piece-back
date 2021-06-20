@@ -46,7 +46,6 @@ module.exports = class UserDAO extends BaseDAO {
     }
 
     updateWithoutPassword(user){
-        console.log(user)
         return this.db.query("update users set firstname=$1, lastname =$2, email=$3 where id=$4",
             [
                 user.firstname,
@@ -57,11 +56,18 @@ module.exports = class UserDAO extends BaseDAO {
     }
 
     getRights(id){
-        console.log(id)
         return new Promise((resolve,reject)=>{
             this.db.query("SELECT label_right FROM rights inner join user_right on rights.id = user_right.right_id where user_id = $1", [id])
                 .then(res => resolve(res.rows))
                 .catch(e => reject(e))
+        })
+    }
+
+    getOuvrier(){
+        return new Promise((resolve,reject)=>{
+            this.db.query("SELECT * from users inner join user_right on users.id = user_right.user_id where right_id = 2")
+                .then(res=>resolve(res.rows))
+                .catch(e=>reject(e))
         })
     }
 }

@@ -50,5 +50,25 @@ module.exports = class UserService {
         }
         return false
     }
+
+    async isOuvrier(user_id){
+        const role = await this.userRightDao.getAll(user_id)
+        for(let aRole of role){
+            if(aRole.right_id === 2){
+                return true
+            }
+        }
+        return false
+    }
+
+    async isCompta(user_id){
+        const role = await this.userRightDao.getAll(user_id)
+        for(let aRole of role){
+            if(aRole.right_id === 3){
+                return true
+            }
+        }
+        return false
+    }
     
 }
