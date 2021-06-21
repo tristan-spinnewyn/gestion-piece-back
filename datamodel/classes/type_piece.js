@@ -1,5 +1,5 @@
 module.exports = class TypePiece {
-    constructor(lib_type) {
-        this.lib_type = lib_type
+    constructor(label_type) {
+        this.label_type = label_type
     }
 }

@@ -1,5 +1,6 @@
 const Rights = require('./classes/rights')
 const UserRight = require('./classes/user_right')
+const TypePiece = require('./classes/type_piece')
 
 module.exports = (rightsService,
                   userRightService,
@@ -7,7 +8,13 @@ module.exports = (rightsService,
                   machineService,
                   planDeTravailService,
                   planMachineService,
-                  userQualificationService
+                  userQualificationService,
+                  fournisseurService,
+                  gammeOperationService,
+                  gammeService,
+                  operationService,
+                  pieceService,
+                  typePieceService
 ) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -26,6 +33,12 @@ module.exports = (rightsService,
             await planDeTravailService.dao.createTable()
             await userQualificationService.dao.createTable()
             await planMachineService.dao.createTable()
+            await typePieceService.dao.createTable()
+            await fournisseurService.dao.createTable()
+            await pieceService.dao.createTable()
+            await gammeService.dao.createTable()
+            await operationService.dao.createTable()
+            await gammeOperationService.dao.createTable()
 
             // INSERTs
 
@@ -50,6 +63,10 @@ module.exports = (rightsService,
                 .then(async user3 => {
                     userRightService.dao.insert(new UserRight(1, 3))
                 })
+
+            await typePieceService.dao.insert(new TypePiece("Pièce acheté"))
+            await typePieceService.dao.insert(new TypePiece("Pièce intermédiaire"))
+            await typePieceService.dao.insert(new TypePiece("Pièce fini"))
 
         } catch (e) {
             if (e.code === "42P07") { // TABLE ALREADY EXISTS https://www.postgresql.org/docs/8.2/errcodes-appendix.html

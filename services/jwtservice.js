@@ -4,7 +4,6 @@ const jwtKey = 'exemple_cours_secret_key'
 module.exports = (userAccountService) => {
     return {
         validateJWT(req, res, next) {
-            console.log(req.headers)
             if (req.headers.authorization === undefined) {
                 res.status(401).end()
                 return
