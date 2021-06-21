@@ -17,10 +17,10 @@ module.exports = class PlanMachineDAO extends BaseDAO {
             ])
     }
 
-    getAll(plan_de_travail_id){
+    getAll(machine_id){
         return new Promise((resolve, reject) => {
             return this.db.query("SELECT * from plan_de_travail inner join plan_machine on plan_de_travail.id = plan_machine.plan_de_travail_id " +
-                "inner join machine on plan_machine.machine_id = machine.id where plan_de_travail_id = $1", [plan_de_travail_id])
+                "inner join machine on plan_machine.machine_id = machine.id where machine_id = $1", [machine_id])
                 .then(res=>resolve(res.rows))
                 .catch(e => reject(e))
         })

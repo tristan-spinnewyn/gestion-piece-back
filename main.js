@@ -31,7 +31,7 @@ const planDeTravailService = new PlanDeTravailService(db)
 const jwt = require("./services/jwtservice")(userService)
 
 require('./api/userapi')(app,userService,jwt)
-require('./api/machineapi')(app,userService,machineService,jwt)
+require('./api/machineapi')(app,userService,machineService,planMachineService,planDeTravailService,jwt)
 require('./api/plantravailapi')(app,userService,planDeTravailService,userQualificationService,jwt)
 require('./datamodel/seeders')(rightsService, userRightService,userService,machineService,planDeTravailService,planMachineService,userQualificationService)
     .then(app.listen(3333))
