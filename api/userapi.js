@@ -140,9 +140,6 @@ module.exports = (app,serviceUser,jwt) =>{
 
     app.get("/users/ouvrier",jwt.validateJWT,async(req,res)=>{
         try{
-            if (!await serviceUser.isAdmin(req.user.id) && !await serviceUser.isOuvrier(req.user.id)) {
-                return res.status(401).end()
-            }
             const users = await serviceUser.dao.getOuvrier()
             return res.json(users)
         }catch (e) {
