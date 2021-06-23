@@ -32,11 +32,12 @@ module.exports = class PieceDAO extends BaseDAO {
     }
 
     update(piece){
-            return this.db.query("UPDATE piece set lib_piece=$1, prix_vente=$2, prix_achat=$3, fournisseur_id=$4 where id=$5",[
+            return this.db.query("UPDATE piece set lib_piece=$1, prix_vente=$2, prix_achat=$3, fournisseur_id=$4, quantite=$5 where id=$6",[
                 piece.lib_piece,
                 piece.prix_vente,
                 piece.prix_achat,
                 piece.fournisseur_id,
+                piece.quantite,
                 piece.id
             ])
 

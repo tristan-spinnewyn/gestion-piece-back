@@ -20,7 +20,7 @@ module.exports = class GammeOperationDAO extends BaseDAO {
     getAll(gamme_id){
         return new Promise((resolve, reject) => {
             return this.db.query("SELECT * from gamme inner join gamme_operation on gamme.id = gamme_operation.gamme_id " +
-                "inner join operation on gamme_operation.operation_id = operation.id where gamme_id = $1", [gamme_id])
+                "inner join operation on gamme_operation.operation_id = operation.id where gamme_id = $1 order by ordre", [gamme_id])
                 .then(res=>resolve(res.rows))
                 .catch(e => reject(e))
         })
