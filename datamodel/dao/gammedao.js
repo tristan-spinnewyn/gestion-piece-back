@@ -19,7 +19,7 @@ module.exports = class GammeDAO extends BaseDAO {
 
     getAll(){
         return new Promise((resolve,reject)=>{
-            this.db.query("SELECT * FROM gamme")
+            this.db.query("SELECT *,gamme.id as idgamme FROM gamme inner join users on user_id = users.id inner join piece on piece_id = piece.id")
                 .then(res => resolve(res.rows))
                 .catch(e => reject(e))
         })
@@ -41,5 +41,13 @@ module.exports = class GammeDAO extends BaseDAO {
                 .then(res=>resolve(res.rows[0]))
                 .catch(e => reject(e))
         }))
+    }
+
+    getById(id){
+        return new Promise((resolve,reject)=>{
+            this.db.query("SELECT *,gamme.id as idgamme FROM gamme inner join users on user_id = users.id inner join piece on piece_id = piece.id where gamme.id = $1",[id])
+                .then(res => resolve(res.rows[0]))
+                .catch(e => reject(e))
+        })
     }
 }

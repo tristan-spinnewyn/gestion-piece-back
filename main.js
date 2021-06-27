@@ -47,6 +47,7 @@ require('./api/machineapi')(app,userService,machineService,planMachineService,pl
 require('./api/plantravailapi')(app,userService,planDeTravailService,userQualificationService,jwt)
 require('./api/fournisseurapi')(app,userService,fournisseurService,jwt)
 require('./api/pieceapi')(app,userService,pieceService,typePieceService,gammeService,jwt)
+require('./api/operationapi')(app,userService,gammeService,operationService,gammeOperationService,planMachineService,jwt)
 require('./datamodel/seeders')(rightsService, userRightService,userService,machineService,planDeTravailService,planMachineService,userQualificationService,
     fournisseurService,gammeOperationService,gammeService,operationService,pieceService,typePieceService
     )

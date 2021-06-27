@@ -1,10 +1,26 @@
-module.exports = (app,serviceUser,serviceGamme,serviceOperation,serviceOperationGamme,jwt) => {
+module.exports = (app,serviceUser,serviceGamme,serviceOperation,serviceOperationGamme,servicePlanMachine,jwt) => {
     app.get("/gamme",jwt.validateJWT,async(req,res)=>{
         try{
             if (!await serviceUser.isAdmin(req.user.id) && !await serviceUser.isOuvrier(req.user.id)) {
                 return res.status(401).end()
             }
             const gamme = await serviceGamme.dao.getAll()
+            res.json(gamme)
+        }catch (e) {
+            console.log(e)
+            res.status(400).end()
+        }
+    })
+
+    app.get("/gamme/:id",jwt.validateJWT,async(req,res)=>{
+        try{
+            if (!await serviceUser.isAdmin(req.user.id) && !await serviceUser.isOuvrier(req.user.id)) {
+                return res.status(401).end()
+            }
+            const gamme = await serviceGamme.dao.getById(req.params.id)
+            if(gamme === null || gamme === undefined){
+                return res.status(404).end()
+            }
             res.json(gamme)
         }catch (e) {
             console.log(e)
@@ -111,6 +127,19 @@ module.exports = (app,serviceUser,serviceGamme,serviceOperation,serviceOperation
             const gamme_operation = {gamme_id:req.params.id, operation_id:req.params.id_operation}
             serviceOperationGamme.dao.delete(gamme_operation)
             res.status(200).end()
+        }catch (e) {
+            console.log(e)
+            res.status(400).end()
+        }
+    })
+
+    app.get("/plan_machine",jwt.validateJWT,async(req,res)=>{
+        try{
+            if (!await serviceUser.isAdmin(req.user.id) && !await serviceUser.isOuvrier(req.user.id)) {
+                return res.status(401).end()
+            }
+            const poste_machine = await servicePlanMachine.dao.getAllOp()
+            res.json(poste_machine)
         }catch (e) {
             console.log(e)
             res.status(400).end()
