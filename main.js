@@ -19,6 +19,10 @@ const GammeService = require('./services/gammeservice')
 const OperationService = require('./services/operationservice')
 const PieceService = require('./services/pieceservice')
 const TypePieceService = require('./services/type_pieceservice')
+const MatPremService = require('./services/mat_premservice')
+const CompositionService = require('./services/compositionservice')
+const RealisationService = require('./services/realisationservice')
+const StockService = require('./services/stock')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false })) // URLEncoded form data
@@ -40,7 +44,12 @@ const gammeService = new GammeService(db)
 const operationService = new OperationService(db)
 const pieceService = new PieceService(db)
 const typePieceService = new TypePieceService(db)
+const realisationService = new RealisationService(db)
+const compositionService = new CompositionService(db)
+const matPremService = new MatPremService(db)
+
 const jwt = require("./services/jwtservice")(userService)
+const stock= new StockService(db)
 
 require('./api/userapi')(app,userService,jwt)
 require('./api/machineapi')(app,userService,machineService,planMachineService,planDeTravailService,jwt)
@@ -48,7 +57,10 @@ require('./api/plantravailapi')(app,userService,planDeTravailService,userQualifi
 require('./api/fournisseurapi')(app,userService,fournisseurService,jwt)
 require('./api/pieceapi')(app,userService,pieceService,typePieceService,gammeService,jwt)
 require('./api/operationapi')(app,userService,gammeService,operationService,gammeOperationService,planMachineService,jwt)
+require('./api/matpremapi')(app,userService,matPremService,jwt)
+require('./api/compositionapi')(app,userService,compositionService,jwt)
+require('./api/realisationapi')(app,userService,realisationService,stock,jwt)
 require('./datamodel/seeders')(rightsService, userRightService,userService,machineService,planDeTravailService,planMachineService,userQualificationService,
-    fournisseurService,gammeOperationService,gammeService,operationService,pieceService,typePieceService
+    fournisseurService,gammeOperationService,gammeService,operationService,pieceService,typePieceService,matPremService,compositionService,realisationService
     )
     .then(app.listen(3333))

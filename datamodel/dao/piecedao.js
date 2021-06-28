@@ -42,4 +42,28 @@ module.exports = class PieceDAO extends BaseDAO {
             ])
 
     }
+
+    getPieceComposition(){
+        return new Promise((resolve,reject)=>{
+            this.db.query("SELECT * FROM piece where type_id <> 3")
+                .then(res => resolve(res.rows))
+                .catch(e => reject(e))
+
+        })
+    }
+
+    addStock(id,qte){
+        return this.db.query("UPDATE piece set  quantite=quantite+$1 where id=$2",[
+            qte,
+            id
+        ])
+    }
+
+    sousStock(id,qte){
+        console.log(qte)
+        return this.db.query("UPDATE piece set quantite=quantite-$1 where id=$2",[
+            qte,
+            id
+        ])
+    }
 }

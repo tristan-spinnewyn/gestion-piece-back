@@ -29,7 +29,12 @@ module.exports = class UserService {
 
     async validatePassword(login,password){
         const user = await this.dao.getByLogin(login.trim())
+
         if(!user){
+            return false
+        }
+        const right = await this.userRightDao.getAll(user.id)
+        if(right.length === 0){
             return false
         }
         return this.comparePassword(password,user.pwd)

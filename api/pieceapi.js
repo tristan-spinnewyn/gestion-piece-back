@@ -90,4 +90,14 @@ module.exports = (app,serviceUser,servicePiece,serviceTypePiece,serviceGamme,jwt
             res.status(400).end()
         }
     })
+
+    app.get("/piece_for_composition",jwt.validateJWT,async(req,res)=>{
+        try{
+            const piece = await servicePiece.dao.getPieceComposition()
+            res.json(piece)
+        }catch (e){
+            console.log(e)
+            res.status(400).end()
+        }
+    })
 }
