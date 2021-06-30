@@ -10,16 +10,28 @@ module.exports = class RealisationDAO extends BaseDAO {
     }
 
     insert(realisation){
-        return this.db.query("Insert into realisation(date_rea,gamme_id) values ($1,$2)", [
-            realisation.date_rea,
-            realisation.gamme_id
-        ])
+        return new Promise(((resolve, reject) => {
+            return this.db.query("Insert into realisation(date_rea,gamme_id) values ($1,$2) RETURNING id", [
+                realisation.date_rea,
+                realisation.gamme_id
+            ])
+                .then(res =>resolve(res.rows[0].id))
+                .catch(e=>reject(e))
+        }))
     }
 
     getAll(){
         return new Promise((resolve,reject)=>{
             this.db.query("SELECT *,realisation.id as reaid from realisation inner join gamme on gamme.id = gamme_id inner join piece on piece_id = piece.id")
                 .then(res => resolve(res.rows))
+                .catch(e => reject(e))
+        })
+    }
+
+    getById(id){
+        return new Promise((resolve,reject)=>{
+            this.db.query("SELECT *,realisation.id as reaid from realisation inner join gamme on gamme.id = gamme_id inner join piece on piece_id = piece.id where realisation.id = $1",[id])
+                .then(res => resolve(res.rows[0]))
                 .catch(e => reject(e))
         })
     }

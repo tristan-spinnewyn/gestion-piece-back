@@ -23,6 +23,7 @@ const MatPremService = require('./services/mat_premservice')
 const CompositionService = require('./services/compositionservice')
 const RealisationService = require('./services/realisationservice')
 const StockService = require('./services/stock')
+const RealisationOperationService = require('./services/operation_realisationservice')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false })) // URLEncoded form data
@@ -47,6 +48,7 @@ const typePieceService = new TypePieceService(db)
 const realisationService = new RealisationService(db)
 const compositionService = new CompositionService(db)
 const matPremService = new MatPremService(db)
+const realisationOperationService = new RealisationOperationService(db)
 
 const jwt = require("./services/jwtservice")(userService)
 const stock= new StockService(db)
@@ -59,8 +61,8 @@ require('./api/pieceapi')(app,userService,pieceService,typePieceService,gammeSer
 require('./api/operationapi')(app,userService,gammeService,operationService,gammeOperationService,planMachineService,jwt)
 require('./api/matpremapi')(app,userService,matPremService,jwt)
 require('./api/compositionapi')(app,userService,compositionService,jwt)
-require('./api/realisationapi')(app,userService,realisationService,stock,jwt)
+require('./api/realisationapi')(app,userService,realisationService,realisationOperationService,stock,jwt)
 require('./datamodel/seeders')(rightsService, userRightService,userService,machineService,planDeTravailService,planMachineService,userQualificationService,
-    fournisseurService,gammeOperationService,gammeService,operationService,pieceService,typePieceService,matPremService,compositionService,realisationService
+    fournisseurService,gammeOperationService,gammeService,operationService,pieceService,typePieceService,matPremService,compositionService,realisationService,realisationOperationService
     )
     .then(app.listen(3333))
