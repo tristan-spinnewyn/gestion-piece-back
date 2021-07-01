@@ -48,4 +48,14 @@ module.exports = (app,serviceUser,serviceMat,jwt) => {
             res.status(400).end()
         }
     })
+
+    app.get("/mat_prem/fournisseur/:id",jwt.validateJWT,async(req,res)=>{
+        try{
+            const piece = await serviceMat.dao.getMatPremFournisseur(req.params.id)
+            res.json(piece)
+        }catch (e){
+            console.log(e)
+            res.status(400).end()
+        }
+    })
 }

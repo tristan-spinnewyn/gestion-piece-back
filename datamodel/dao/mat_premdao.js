@@ -36,6 +36,14 @@ module.exports = class MatPremDAO extends BaseDAO {
         ])
     }
 
+    getMatPremFournisseur(fournisseur_id){
+        return new Promise((resolve,reject)=>{
+            this.db.query("SELECT * from mat_prem where fournisseur_id = $1",[fournisseur_id])
+                .then(res => resolve(res.rows))
+                .catch(e => reject(e))
+        })
+    }
+
     addStock(id,qte){
         return this.db.query("UPDATE mat_prem set quantite=quantite+$1 where id=$2",[
             qte,

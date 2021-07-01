@@ -52,6 +52,15 @@ module.exports = class PieceDAO extends BaseDAO {
         })
     }
 
+    getPieceFournisseur(fournisseur_id){
+        return new Promise((resolve,reject)=>{
+            this.db.query("SELECT * FROM piece where fournisseur_id = $1",[fournisseur_id])
+                .then(res => resolve(res.rows))
+                .catch(e => reject(e))
+
+        })
+    }
+
     addStock(id,qte){
         return this.db.query("UPDATE piece set  quantite=quantite+$1 where id=$2",[
             qte,
