@@ -21,7 +21,10 @@ module.exports = (rightsService,
                   realisationOperationService,
                   achatService,
                   ligneAchatService,
-                  clientService
+                  clientService,
+                  devisService,
+                  commandeService,
+                  ligneDevisService
 ) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -53,6 +56,9 @@ module.exports = (rightsService,
             await achatService.dao.createTable()
             await ligneAchatService.dao.createTable()
             await clientService.dao.createTable()
+            await devisService.dao.createTable()
+            await commandeService.dao.createTable()
+            await ligneDevisService.dao.createTable()
 
             // INSERTs
 

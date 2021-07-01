@@ -52,6 +52,15 @@ module.exports = class PieceDAO extends BaseDAO {
         })
     }
 
+    getPieceAVendre(){
+        return new Promise((resolve,reject)=>{
+            this.db.query("SELECT * FROM piece where type_id = 3")
+                .then(res => resolve(res.rows))
+                .catch(e => reject(e))
+
+        })
+    }
+
     getPieceFournisseur(fournisseur_id){
         return new Promise((resolve,reject)=>{
             this.db.query("SELECT * FROM piece where fournisseur_id = $1",[fournisseur_id])
