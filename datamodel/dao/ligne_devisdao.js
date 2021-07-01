@@ -28,7 +28,7 @@ module.exports = class LigneAchatDAO extends BaseDAO {
 
     getAllForSetCommande(client_id){
         return new Promise((resolve, reject) => {
-            return this.db.query("SELECT * , ligne_devis.prix as prix_ligne from ligne_devis left join piece on piece.id = piece_id left join devis on devis_id = devis.id where client_id = $1 and status = 2 and commande_id = null and devis.date_limite >= CURRENT_DATE ", [client_id])
+            return this.db.query("SELECT *  from ligne_devis inner join piece on piece.id = piece_id inner join devis on devis_id = devis.id where client_id = $1 and status = 2 and commande_id is null and devis.date_limite >= CURRENT_DATE ", [client_id])
                 .then(res=>resolve(res.rows))
                 .catch(e => reject(e))
         })
@@ -36,7 +36,7 @@ module.exports = class LigneAchatDAO extends BaseDAO {
 
     getAllInCommande(commande_id){
         return new Promise((resolve, reject) => {
-            return this.db.query("SELECT * , ligne_devis.prix as prix_ligne from ligne_devis left join piece on piece.id = piece_id where commande_id = $1", [commande_id])
+            return this.db.query("SELECT * from ligne_devis inner join piece on piece.id = piece_id where commande_id = $1", [commande_id])
                 .then(res=>resolve(res.rows))
                 .catch(e => reject(e))
         })
@@ -44,20 +44,19 @@ module.exports = class LigneAchatDAO extends BaseDAO {
 
     getPieceInCommande(commande_id,piece_id){
         return new Promise((resolve, reject) => {
-            return this.db.query("SELECT * , ligne_devis.prix as prix_ligne from ligne_devis left join piece on piece.id = piece_id where commande_id = $1 and piece_id = $2", [commande_id,piece_id])
+            return this.db.query("SELECT * from ligne_devis left join piece on piece.id = piece_id where commande_id = $1 and piece_id = $2", [commande_id,piece_id])
                 .then(res=>resolve(res.rows[0]))
                 .catch(e => reject(e))
         })
     }
 
     setCommande(id_piece,id_devis,id_commande){
-        return new Promise((resolve,reject)=>{
-            this.db.query("UPDATE ligne_devis set commande_id=$1  where piece_id=$2 and devis_id=$3",[
+            return this.db.query("UPDATE ligne_devis set commande_id=$1  where piece_id=$2 and devis_id=$3",[
                 id_commande,
                 id_piece,
                 id_devis,
             ])
-        })
+
     }
 
 }

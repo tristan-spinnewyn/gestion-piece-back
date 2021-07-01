@@ -29,11 +29,10 @@ module.exports = class DeviDAO extends BaseDAO {
     }
 
     terminate(id_devis){
-        return new Promise((resolve,reject)=>{
             this.db.query("UPDATE devis set status=2  where id=$1;",[
                 id_devis
             ])
-        })
+
     }
 
     getById(id) {
